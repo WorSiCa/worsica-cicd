@@ -8,7 +8,7 @@ pipeline {
             label 'worsica.vo.incd.pt'
             customWorkspace '/home/worsica.vo.incd.pt'
             docker.withRegistry(‘https://hub.docker.com/', ‘svc-acct’) {
-                sh ‘docker-compose –f dc-testenv.yml up’
+                sh 'docker-compose –f dc-testenv.yml up'
             }
         }
     }

@@ -9,6 +9,7 @@ services:
         maintainer="Ricardo Martins <rjmartins@lnec.pt>"
         collaborator="Samuel Bernardo <samuel@lip.pt>"
     container_name: "celery"
+    hostname: "celery"
     volumes:
       - type: bind
         source: worsica_web
@@ -33,13 +34,17 @@ services:
     restart: "on-failure:5"
 
   postgis:
-      image: "mdillon/postgis:9.2"
-      volumes:
-        - type: bind
-          source: database_data
-          target: /var/lib/postgresql/data:rw
-      ports:
-          - "5432:5432"
+    image: "mdillon/postgis:9.2"
+    hostname: "postgis"
+    volumes:
+      - type: bind
+        source: database_data
+        target: /var/lib/postgresql/data:rw
+    ports:
+        - "127.0.0.1:5432:5432"
+    networks:
+      worsica_net:
+        ipv4_address: 172.16.238.2
       environment:
           - "POSTGRES_PASSWORD=password"
           - "LANG=en_US.utf8"
@@ -47,38 +52,45 @@ services:
       restart: "on-failure:5"
 
   pgadmin:
-      image: "dpage/pgadmin4:4.5"
-      ports:
-        - "10080:80"
-        - "443:443"
-      environment:
-        - "PGADMIN_DEFAULT_EMAIL=user@example.com"
-        - "PGADMIN_DEFAULT_PASSWORD=password"
-        - "LANG=C.UTF-8"
-        - "GPG_KEY=0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D"
-      restart: "on-failure:5"
+    image: "dpage/pgadmin4:4.5"
+    hostname: "pgadmin"
+    ports:
+      - "127.0.0.1:10080:80"
+      - "127.0.0.1:443:443"
+    networks:
+      worsica_net:
+        ipv4_address: 172.16.238.3
+    environment:
+      - "PGADMIN_DEFAULT_EMAIL=user@example.com"
+      - "PGADMIN_DEFAULT_PASSWORD=password"
+      - "LANG=C.UTF-8"
+      - "GPG_KEY=0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D"
+    restart: "on-failure:5"
 
   rabbitmq:
-      image: "rabbitmq:3.7-management"
-      hostname: "worsica-backend"
-      volumes:
-          - type: bind
-            source: rabbitmq_data
-            target: /var/lib/rabbitmq/mnesia/rabbit@my-rabbit
-      ports:
-          - "8080:15672"
-          - "5672:5672"
-      environment:
-          - "RABBITMQ_SSL_CACERTFILE"
-          - "RABBITMQ_SSL_CERTFILE"
-          - "RABBITMQ_SSL_DEPTH"
-          - "RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT"
-          - "RABBITMQ_SSL_KEYFILE"
-          - "RABBITMQ_SSL_VERIFY"
-          - "RABBITMQ_DEFAULT_VHOST=my_vhost"
-          - "RABBITMQ_DEFAULT_USER=user"
-          - "RABBITMQ_DEFAULT_PASS=password"
-      restart: "on-failure:5"
+    image: "rabbitmq:3.7-management"
+    hostname: "rabbitmq"
+    volumes:
+        - type: bind
+          source: rabbitmq_data
+          target: /var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+    ports:
+        - "127.0.0.1:8080:15672"
+        - "127.0.0.1:5672:5672"
+    networks:
+      worsica_net:
+        ipv4_address: 172.16.238.4
+    environment:
+        - "RABBITMQ_SSL_CACERTFILE"
+        - "RABBITMQ_SSL_CERTFILE"
+        - "RABBITMQ_SSL_DEPTH"
+        - "RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT"
+        - "RABBITMQ_SSL_KEYFILE"
+        - "RABBITMQ_SSL_VERIFY"
+        - "RABBITMQ_DEFAULT_VHOST=my_vhost"
+        - "RABBITMQ_DEFAULT_USER=user"
+        - "RABBITMQ_DEFAULT_PASS=password"
+    restart: "on-failure:5"
 
 logging:
   driver: syslog
@@ -95,3 +107,7 @@ volumes:
 
 networks:
   worsica_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
