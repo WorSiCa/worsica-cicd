@@ -7,9 +7,6 @@ pipeline {
         node {
             label 'worsica.vo.incd.pt'
             customWorkspace '/home/worsica.vo.incd.pt'
-            docker.withRegistry(‘https://hub.docker.com/', ‘svc-acct’) {
-                sh 'docker-compose –f dc-testenv.yml up'
-            }
         }
     }
 
@@ -27,9 +24,19 @@ commands = bandit -r worsica-processing/ -f html -o bandit_worsicaprocessing.htm
     }
 
     stages {
-        stage('Code fetching') {
+        stage('Deploy services and workspace') {
             steps {
                 checkout scm
+                script {
+                    docker.withRegistry('https://hub.docker.com/') {
+                        sh 'docker-compose –f dc-testenv.yml up'
+                    }
+                }
+            }
+        }
+
+        stage('Code fetching') {
+            steps {
                 git branch: env.BRANCH_NAME,
                     url: 'https://github.com/WorSiCa/worsica-processing.git'
                 git branch: env.BRANCH_NAME,
