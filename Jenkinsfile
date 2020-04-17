@@ -1,12 +1,18 @@
 #!/usr/bin/groovy
 
-@Library(['github.com/indigo-dc/jenkins-pipeline-library@1.3.1']) _
+@Library(['github.com:WORSICA/jenkins-pipeline-library@docker-compose']) _
+
+node {
+    label 'worsica.vo.incd.pt'
+
+    
+}
 
 pipeline {
     agent {
         node {
             label 'worsica.vo.incd.pt'
-            customWorkspace '/home/worsica.vo.incd.pt'
+            customWorkspace './worsica.vo.incd.pt'
         }
     }
 
@@ -26,12 +32,7 @@ commands = bandit -r worsica-processing/ -f html -o bandit_worsicaprocessing.htm
     stages {
         stage('Deploy services and workspace') {
             steps {
-                checkout scm
-                script {
-                    docker.withRegistry('https://hub.docker.com/') {
-                        sh 'docker-compose –f dc-testenv.yml up'
-                    }
-                }
+                DockerComposeUp('', 'dc-testenv.yml')
             }
         }
 
@@ -124,5 +125,11 @@ commands = bandit -r worsica-processing/ -f html -o bandit_worsicaprocessing.htm
             }
         }
 
+        stage('Stop services and clean workspace') {
+            steps {
+                // Set to false if images and containers must be preserved
+                DockerComposeDown(true)
+            }
+        }
     }
 }

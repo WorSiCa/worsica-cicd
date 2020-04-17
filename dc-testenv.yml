@@ -1,13 +1,13 @@
 version: "3"
 
 services:
+  processing:
+    image: "worsica/worsica-backend:worsica-processing-dev_latest"
+    container_name: "processing"
+    hostname: "processing"
+  
   celery:
-    build:
-      context: "./aio_v2/"
-      dockerfile: "Dockerfile"
-      labels:
-        maintainer="Ricardo Martins <rjmartins@lnec.pt>"
-        collaborator="Samuel Bernardo <samuel@lip.pt>"
+    image: "worsica/worsica-frontend:worsica-portal-dev_latest"
     container_name: "celery"
     hostname: "celery"
     volumes:
