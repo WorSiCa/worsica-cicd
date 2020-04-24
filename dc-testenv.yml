@@ -5,6 +5,10 @@ services:
     image: "worsica/worsica-backend:worsica-processing-dev_latest"
     container_name: "processing"
     hostname: "processing"
+    volumes:
+     - type: bind
+       source: worsica_web_products
+       target: /usr/local/worsica_web_products
   
   celery:
     image: "worsica/worsica-frontend:worsica-portal-dev_latest"

@@ -2,12 +2,6 @@
 
 @Library(['github.com:WORSICA/jenkins-pipeline-library@docker-compose']) _
 
-node {
-    label 'worsica.vo.incd.pt'
-
-    
-}
-
 pipeline {
     agent {
         node {
