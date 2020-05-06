@@ -1,0 +1,32 @@
+#PARENT
+FROM centos:7.6.1810
+MAINTAINER Ricardo Martins <rjmartins@lnec.pt>
+
+ENV LD_LIBRARY_PATH /usr/lib:/usr/local/lib:/usr/local/lib64
+ENV HOME /usr/local
+ENV PYTHON_VERSION 3.6.3
+ENV GDAL_VERSION 2.3.2
+ENV SNAP_VERSION 6
+#Install Python Virtual Environment (venv)
+#Install packages inside venv
+#epel-release
+
+RUN yum update -y \
+    && yum install -y epel-release \
+    && yum install -y unzip wget make zlib-devel bzip2-devel openssl-devel readline-devel ncurses-devel sqlite-devel gdbm-devel db4-devel expat-devel libpcap-devel xz-devel pcre-devel libffi-devel gcc libXext libSM libXrender tar gcc-c++ proj geos nano gzip which \
+    && yum clean all --enablerepo=epel \
+    && rm -rf /var/tmp/yum-* \
+    && rm -rf /var/cache/yum
+
+RUN cd $HOME \
+    && curl -kL https://raw.githubusercontent.com/saghul/pythonz/master/pythonz-install | bash \
+    && $HOME/pythonz/bin/pythonz install ${PYTHON_VERSION} \
+    && $HOME/pythonz/pythons/CPython-${PYTHON_VERSION}/bin/python -m venv worsica_web-py363_venv \
+    && echo -e " \
+        numpy==1.15.2 \n\
+        sentinelsat==0.12.2  " >> requirements-essential-pip.txt \
+    && $HOME/worsica_web-py363_venv/bin/pip3 install -r requirements-essential-pip.txt
+
+
+    
+    
