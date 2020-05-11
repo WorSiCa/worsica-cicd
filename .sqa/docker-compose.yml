@@ -104,10 +104,10 @@ logging:
 volumes:
   syslog: /dev/log
   hosts: /etc/hosts
-  worsica_web: /home/centos/worsica_web
-  worsica_web_products: /home/centos/worsica_web_products
-  database_data: /database/data
-  rabbitmq_data: /rabbitmq/data
+  worsica_web: ./worsica_web
+  worsica_web_products: ./worsica_web_products
+  database_data: ./database/data
+  rabbitmq_data: ./rabbitmq/data
 
 networks:
   worsica_net:

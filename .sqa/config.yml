@@ -1,0 +1,26 @@
+config:
+  dockerfile: .sqa/docker-compose.yml
+  project_repos:
+    - "https://github.com/WORSICA/worsica-processing.git"
+    - "https://github.com/WORSICA/worsica-intermediate.git"
+    - "https://github.com/WORSICA/worsica-portal.git"
+
+steps:
+  style_check:
+    - bundle exec rubocop -R app spec --format simple
+    - bundle exec rubycritic --path ./analysis --minimum-score 80 --no-browser
+  unit_test:
+    - bundle exec rails db:create
+    - bundle exec rails db:schema:load
+  coverage:
+    - bundle exec rspec
+  security:
+    - bundle exec brakeman --exit-on-error
+
+environment:
+  RAILS_ENV: test
+  GIT_COMMITTER_NAME: a
+  GIT_COMMITTER_EMAIL: b
+  LANG: C.UTF-8
+
+timeout: 600
