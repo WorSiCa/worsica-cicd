@@ -4,50 +4,58 @@ config:
   node_agent: 'docker-compose'
   dockerfile: '.sqa/docker-compose.yml'
   project_repos:
-    - 'https://github.com/WORSICA/worsica-processing.git'
-    - 'https://github.com/WORSICA/worsica-intermediate.git'
-    - 'https://github.com/WORSICA/worsica-portal.git'
-  dockerhub_repos:
-    - 'worsica/worsica-cicd'
+    worsica-processing:
+      repo: 'https://github.com/WORSICA/worsica-processing.git'
+      branch: master
+      dockerhub: worsica/worsica-processing
+    worsica-intermediate:
+      repo: 'https://github.com/WORSICA/worsica-intermediate.git'
+      branch: master
+      dockerhub: worsica/worsica-intermediate
+    worsica-portal:
+      repo: 'https://github.com/WORSICA/worsica-portal.git'
+      branch: master
+      dockerhub: worsica/worsica-portal
+    worsica-cicd:
+      repo: 'https://github.com/WORSICA/worsica-cicd.git'
+      branch: master
+      dockerhub: worsica/worsica-cicd
 
 sqa-criteria:
   qc-style:
-    repository: 'https://github.com/WORSICA/worsica-processing.git'
-    branch: master
-    container: processing
-    tox:
-      testenv: stylecheck
+    repos:
+      worsica-processing:
+        container: processing
+        tox:
+          testenv: stylecheck
   qc-functional:
-    -
-      repository: 'https://github.com/WORSICA/worsica-processing.git'
-      branch: master
-      container: processing
-      tox:
-        testenv: unittest
-    -
-      repository: 'https://github.com/WORSICA/worsica-portal.git'
-      branch: master
-      container: processing
-      tox:
-        testenv: functional
+    repos:
+      worsica-processing:
+        container: processing
+        tox:
+          testenv: unittest
+      worsica-portal:
+        container: celery
+        tox:
+          testenv: functional
   qc-coverage:
-    repository: 'https://github.com/WORSICA/worsica-processing.git'
-    branch: master
-    container: processing
-    tox:
-      testenv: coverage
+    repos:
+      worsica-processing:
+        container: processing
+        tox:
+          testenv: coverage
   qc-security:
-    repository: 'https://github.com/WORSICA/worsica-processing.git'
-    branch: master
-    container: processing
-    tox:
-      testenv: security
+    repos:
+      worsica-processing:
+        container: processing
+        tox:
+          testenv: security
   qc-doc:
-    repository: 'https://github.com/WORSICA/worsica-cicd.git'
-    branch: master
-    container: processing
-    commands:
-      - python setup.py build_sphinx
+    repos:
+      worsica-cicd:
+        container: processing 
+        commands:
+          - python setup.py build_sphinx
 
 environment:
   TOX_FILE: './tox.ini'
