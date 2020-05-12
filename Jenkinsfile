@@ -2,28 +2,51 @@
 
 @Library(['github.com:WORSICA/jenkins-pipeline-library@docker-compose']) _
 
+def projectConfig
+
 pipeline {
-    agent {
-        node {
-            label 'worsica.vo.incd.pt'
-            customWorkspace './worsica.vo.incd.pt'
-        }
+    agent any
+
+    options {
+        buildDiscarder(logRotator(daysToKeepStr: '7', numToKeepStr: '1'))
     }
 
     environment {
-        dockerhub_repo = "worsica/worsica-cicd"
-        tox_envs = """
-[testenv:stylecheck]
-commands = pylint worsica-processing
-[testenv:unittest]
-commands = pytest -ra worsica-processing/worsica_unit_tests.py
-[testenv:coverage]
-commands = pytest --cov-report xml:cov_worsicaprocessing.xml --cov=worsica-processing worsica-processing/
-[testenv:security]
-commands = bandit -r worsica-processing/ -f html -o bandit_worsicaprocessing.html"""
+        CONFIG_FILE = '.sqa/config.yml'
     }
 
     stages {
+        stage('Load Configuration') {
+            steps {
+                script {
+                    projectConfig = PipelineConfig('.sqa/config.yml')
+                }
+            }
+            post {
+                cleanup {
+                    cleanWs()
+                }
+            }
+        }
+        stage('Dynamic Stages') {
+            agent {
+                node {
+                    label projectConfig.node_label
+                    customWorkspace projectConfig.node_workspace
+                    }
+            }
+            steps {
+                script {
+                    BuildStages(projectConfig)
+                }
+            }
+            post {
+                cleanup {
+                    cleanWs()
+                }
+            }
+        }
+
         stage('Deploy services and workspace') {
             steps {
                 DockerComposeUp('', 'dc-testenv.yml')

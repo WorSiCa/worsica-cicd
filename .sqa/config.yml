@@ -1,26 +1,41 @@
 config:
-  dockerfile: .sqa/docker-compose.yml
+  node_label: 'worsica.vo.incd.pt'
+  node_workspace: './worsica.vo.incd.pt'
+  node_agent: 'docker-compose'
+  dockerfile: '.sqa/docker-compose.yml'
   project_repos:
-    - "https://github.com/WORSICA/worsica-processing.git"
-    - "https://github.com/WORSICA/worsica-intermediate.git"
-    - "https://github.com/WORSICA/worsica-portal.git"
+    - 'https://github.com/WORSICA/worsica-processing.git'
+    - 'https://github.com/WORSICA/worsica-intermediate.git'
+    - 'https://github.com/WORSICA/worsica-portal.git'
+  dockerhub_repos:
+    - 'worsica/worsica-cicd'
 
-steps:
-  style_check:
-    - bundle exec rubocop -R app spec --format simple
-    - bundle exec rubycritic --path ./analysis --minimum-score 80 --no-browser
-  unit_test:
-    - bundle exec rails db:create
-    - bundle exec rails db:schema:load
-  coverage:
-    - bundle exec rspec
-  security:
-    - bundle exec brakeman --exit-on-error
+sqa-criteria:
+  qc-style:
+    container: processing
+    tox:
+      testenv: stylecheck
+  qc-functional:
+    container: processing
+    tox:
+      testenv: unittest
+  qc-coverage:
+    container: processing
+    tox:
+      testenv: coverage
+  qc-security:
+    container: processing
+    tox:
+      testenv: security
+  qc-doc:
+    container: processing
+    commands:
+      - python setup.py build_sphinx
 
 environment:
-  RAILS_ENV: test
-  GIT_COMMITTER_NAME: a
-  GIT_COMMITTER_EMAIL: b
+  TOX_FILE: './tox.ini'
+  GIT_COMMITTER_NAME: Person1
+  GIT_COMMITTER_EMAIL: person1@example.org
   LANG: C.UTF-8
 
 timeout: 600
