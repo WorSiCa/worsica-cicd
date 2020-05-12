@@ -12,22 +12,39 @@ config:
 
 sqa-criteria:
   qc-style:
+    repository: 'https://github.com/WORSICA/worsica-processing.git'
+    branch: master
     container: processing
     tox:
       testenv: stylecheck
   qc-functional:
-    container: processing
-    tox:
-      testenv: unittest
+    -
+      repository: 'https://github.com/WORSICA/worsica-processing.git'
+      branch: master
+      container: processing
+      tox:
+        testenv: unittest
+    -
+      repository: 'https://github.com/WORSICA/worsica-portal.git'
+      branch: master
+      container: processing
+      tox:
+        testenv: functional
   qc-coverage:
+    repository: 'https://github.com/WORSICA/worsica-processing.git'
+    branch: master
     container: processing
     tox:
       testenv: coverage
   qc-security:
+    repository: 'https://github.com/WORSICA/worsica-processing.git'
+    branch: master
     container: processing
     tox:
       testenv: security
   qc-doc:
+    repository: 'https://github.com/WORSICA/worsica-cicd.git'
+    branch: master
     container: processing
     commands:
       - python setup.py build_sphinx
