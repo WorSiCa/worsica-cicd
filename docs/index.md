@@ -1,8 +1,3 @@
----
-title: Site Index
-layout: default
----
-
 # Index
 
 - [Documentation](#documentation)
@@ -15,4 +10,6 @@ To create documentation for code repositories:
 - change source from none to master branch / docs folder
 - select the desired theme
 - place the link in index.md of WORSICA.github.io repository
+
+[Return to Home Page](https://worsica.github.io/)
 
