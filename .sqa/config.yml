@@ -8,18 +8,22 @@ config:
       repo: 'https://github.com/WORSICA/worsica-processing.git'
       branch: master
       dockerhub: worsica/worsica-processing
+      dockertag: latest
     worsica-intermediate:
       repo: 'https://github.com/WORSICA/worsica-intermediate.git'
       branch: master
       dockerhub: worsica/worsica-intermediate
+      dockertag: latest
     worsica-portal:
       repo: 'https://github.com/WORSICA/worsica-portal.git'
       branch: master
       dockerhub: worsica/worsica-portal
+      dockertag: latest
     worsica-cicd:
       repo: 'https://github.com/WORSICA/worsica-cicd.git'
       branch: master
       dockerhub: worsica/worsica-cicd
+      dockertag: latest
 
 sqa-criteria:
   qc-style:
