@@ -1,8 +1,6 @@
 config:
-  node_label: 'worsica.vo.incd.pt'
-  node_workspace: './worsica.vo.incd.pt'
   node_agent: 'docker-compose'
-  dockerfile: '.sqa/docker-compose.yml'
+  deploy_template: '.sqa/docker-compose.yml'
   project_repos:
     worsica-processing:
       repo: 'https://github.com/WORSICA/worsica-processing.git'
@@ -32,28 +30,33 @@ sqa-criteria:
         container: processing
         tox:
           testenv: stylecheck
+          tox_file: './tox.ini'
   qc-functional:
     repos:
       worsica-processing:
         container: processing
         tox:
           testenv: unittest
+          tox_file: './tox.ini'
       worsica-portal:
         container: celery
         tox:
           testenv: functional
+          tox_file: './tox.ini'
   qc-coverage:
     repos:
       worsica-processing:
         container: processing
         tox:
           testenv: coverage
+          tox_file: './tox.ini'
   qc-security:
     repos:
       worsica-processing:
         container: processing
         tox:
           testenv: security
+          tox_file: './tox.ini'
   qc-doc:
     repos:
       worsica-cicd:
@@ -62,7 +65,6 @@ sqa-criteria:
           - python setup.py build_sphinx
 
 environment:
-  TOX_FILE: './tox.ini'
   GIT_COMMITTER_NAME: Person1
   GIT_COMMITTER_EMAIL: person1@example.org
   LANG: C.UTF-8

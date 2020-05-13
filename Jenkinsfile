@@ -1,11 +1,14 @@
-#!/usr/bin/groovy
-
 @Library(['github.com:WORSICA/jenkins-pipeline-library@docker-compose']) _
 
 def projectConfig
 
 pipeline {
-    agent any
+    agent {
+        node {
+            label 'worsica.vo.incd.pt'
+            customWorkspace './workspace/worsica.vo.incd.pt'
+            }
+    }
 
     options {
         buildDiscarder(logRotator(daysToKeepStr: '7', numToKeepStr: '1'))
@@ -17,6 +20,7 @@ pipeline {
 
     stages {
         stage('Load Configuration') {
+            agent any
             steps {
                 script {
                     projectConfig = PipelineConfig('.sqa/config.yml')
@@ -29,12 +33,6 @@ pipeline {
             }
         }
         stage('Dynamic Stages') {
-            agent {
-                node {
-                    label projectConfig.node_label
-                    customWorkspace projectConfig.node_workspace
-                    }
-            }
             steps {
                 script {
                     BuildStages(projectConfig)
@@ -47,6 +45,9 @@ pipeline {
             }
         }
 
+        /**
+         * Old pipeline to be replaced by config.yml
+         */
         stage('Deploy services and workspace') {
             steps {
                 DockerComposeUp('', 'dc-testenv.yml')
