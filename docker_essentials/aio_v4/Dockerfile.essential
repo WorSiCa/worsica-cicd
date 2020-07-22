@@ -5,12 +5,16 @@ MAINTAINER Ricardo Martins <rjmartins@lnec.pt>
 ENV LD_LIBRARY_PATH /usr/lib:/usr/local/lib:/usr/local/lib64
 ENV HOME /usr/local
 ENV PYTHON_VERSION 3.6.3
-ENV GDAL_VERSION 3.0.4
-#ENV PROJ_VERSION 6.3.2
+ENV GDAL_VERSION 3.0.4    
+#ENV PROJ_VERSION 6.3.2 
 #ENV GEOS_VERSION 3.8.1
 ENV OPENCV_VERSION 4.0.0.21
 ENV SNAP_VERSION 6
-ENV DJANGO_VERSION 1.11.28
+ENV GUNICORN_VERSION 20.0.4
+
+ENV DJANGO_VERSION 2.2.13 #1.11.29
+ENV SENTINELSAT_VERSION 0.13 #0.12.2
+ENV NUMPY_VERSION 1.15.2
 
 #Install packages inside venv
 #python needs to be installed since its not installed from the main core to make it smaller
@@ -24,8 +28,13 @@ RUN yum update -y \
     && $HOME/pythonz/bin/pythonz install ${PYTHON_VERSION} \
     && $HOME/pythonz/pythons/CPython-${PYTHON_VERSION}/bin/python -m venv worsica_web-py363_venv \
     && echo -e " \
-        numpy==1.15.2 \n\
-        sentinelsat==0.12.2  " >> requirements-essential-pip.txt \
+        numpy==${NUMPY_VERSION} \n\
+	gunicorn==${GUNICORN_VERSION} \n\
+        sentinelsat==${SENTINELSAT_VERSION} \n\
+	selenium \n\
+        pylint \n\
+        pytest \n\
+        coverage " >> requirements-essential-pip.txt \
     && $HOME/worsica_web-py363_venv/bin/pip3 install --no-cache-dir -r requirements-essential-pip.txt \
    #&& $HOME/worsica_web-py363_venv/bin/pip3 install --upgrade pip
 #Cleanup time
