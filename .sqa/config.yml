@@ -3,15 +3,15 @@ config:
   deploy_template: '.sqa/docker-compose.yml'
   project_repos:
     worsica_intermediate:
-      repo: 'https://github.com/WORSICA/worsica-intermediate.git'
+      repo: 'https://github.com/WORSICA/worsica-intermediate'
       branch: development
       credentials_id: worsica-bot-github
     worsica_frontend:
-      repo: 'https://github.com/WORSICA/worsica-frontend.git'
+      repo: 'https://github.com/WORSICA/worsica-frontend'
       branch: development
       credentials_id: worsica-bot-github
     WORSICA_github_io:
-      repo: 'https://github.com:WORSICA/WORSICA.github.io.git'
+      repo: 'https://github.com:WORSICA/WORSICA.github.io'
       branch: development
   credentials:
       - id: worsica-bot-github
