@@ -1,5 +1,5 @@
 config:
-  node_agent: 'docker-compose'
+  node_agent: 'docker_compose'
   deploy_template: '.sqa/docker-compose.yml'
   project_repos:
     worsica_intermediate:
@@ -16,7 +16,7 @@ config:
   credentials:
       - id: worsica-bot-github
         username_var: GIT_USER
-        token_var: GIT_TOKEN
+        password_var: GIT_TOKEN
       - id: worsica-bot-dockerhub
         username_var: DH_USER
         password_var: DH_PASSWORD
