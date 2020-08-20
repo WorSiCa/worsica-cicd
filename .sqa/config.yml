@@ -32,68 +32,80 @@ sqa_criteria:
       worsica_processing:
         container: intermediate
         tox:
-          testenv: worsica-processing-stylecheck
+          testenv:
+            - worsica-processing-stylecheck
           tox_file: '/usr/local/worsica_web_products/tox.ini'
       worsica_intermediate:
         container: intermediate
         tox:
-          testenv: worsica-intermediate-stylecheck
+          testenv:
+            - worsica-intermediate-stylecheck
           tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
       worsica_frontend:
         container: frontend
         tox:
-          testenv: worsica-portal-stylecheck
+          testenv:
+            - worsica-portal-stylecheck
           tox_file: '/usr/local/worsica_frontend/tox.ini'
   qc_coverage:
     repos:
       worsica_processing:
         container: intermediate
         tox:
-          testenv: worsica-processing-coverage
+          testenv:
+            - worsica-processing-coverage
           tox_file: '/usr/local/worsica_web_products/tox.ini'
       worsica_intermediate:
         container: intermediate
         tox:
-          testenv: worsica-intermediate-coverage
+          testenv:
+            - worsica-intermediate-coverage
           tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
       worsica_frontend:
         container: frontend
         tox:
-          testenv: worsica-portal-coverage
+          testenv:
+            - worsica-portal-coverage
           tox_file: '/usr/local/worsica_frontend/tox.ini'
   qc_functional:
     repos:
       worsica_processing:
         container: intermediate
         tox:
-          testenv: worsica-processing-unittest
+          testenv:
+            - worsica-processing-unittest
           tox_file: '/usr/local/worsica_web_products/tox.ini'
       worsica-intermediate:
         container: intermediate
         tox:
-          testenv: worsica-intermediate-functional
+          testenv:
+            - worsica-intermediate-functional
           tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
       worsica_frontend:
         container: frontend
         tox:
-          testenv: worsica-portal-functional
+          testenv:
+            - worsica-portal-functional
           tox_file: '/usr/local/worsica_frontend/tox.ini'
   qc_security:
     repos:
       worsica-processing:
         container: intermediate
         tox:
-          testenv: worsica-processing-security
+          testenv:
+            - worsica-processing-security
           tox_file: '/usr/local/worsica_web_products/tox.ini'
       worsica-intermediate:
         container: intermediate
         tox:
-          testenv: worsica-intermediate-functional
+          testenv:
+            - worsica-intermediate-functional
           tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
       worsica_frontend:
         container: frontend
         tox:
-          testenv: worsica-portal-security
+          testenv:
+            - worsica-portal-security
           tox_file: '/usr/local/worsica_frontend/tox.ini'
 #  qc_doc:
 #    repos:
