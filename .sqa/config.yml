@@ -2,71 +2,108 @@ config:
   node_agent: 'docker-compose'
   deploy_template: '.sqa/docker-compose.yml'
   project_repos:
-    worsica-processing:
-      repo: 'https://github.com/WORSICA/worsica-processing.git'
-      branch: master
-      dockerhub: worsica/worsica-processing
-      dockertag: latest
-    worsica-intermediate:
+    worsica_intermediate:
       repo: 'https://github.com/WORSICA/worsica-intermediate.git'
-      branch: master
-      dockerhub: worsica/worsica-intermediate
-      dockertag: latest
-    worsica-portal:
-      repo: 'https://github.com/WORSICA/worsica-portal.git'
-      branch: master
-      dockerhub: worsica/worsica-portal
-      dockertag: latest
-    worsica-cicd:
-      repo: 'https://github.com/WORSICA/worsica-cicd.git'
-      branch: master
-      dockerhub: worsica/worsica-cicd
-      dockertag: latest
+      branch: development
+      credentials_id: worsica-bot-github
+    worsica_frontend:
+      repo: 'https://github.com/WORSICA/worsica-frontend.git'
+      branch: development
+      credentials_id: worsica-bot-github
+    WORSICA_github_io:
+      repo: 'https://github.com:WORSICA/WORSICA.github.io.git'
+      branch: development
+  credentials:
+      - id: worsica-bot-github
+        username_var: GIT_USER
+        token_var: GIT_TOKEN
+      - id: worsica-bot-dockerhub
+        username_var: DH_USER
+        password_var: DH_PASSWORD
+      - id: worsica-postgis-password
+        variable: POSTGRES_PASSWORD
+      - id: worsica-rabbitmq-corsica
+        username_var: RABBITMQ_USER
+        password_var: RABBITMQ_PASSWORD
 
-sqa-criteria:
-  qc-style:
+sqa_criteria:
+  qc_style:
+    repos:
+      worsica_processing:
+        container: intermediate
+        tox:
+          testenv: worsica-processing-stylecheck
+          tox_file: '/usr/local/worsica_web_products/tox.ini'
+      worsica_intermediate:
+        container: intermediate
+        tox:
+          testenv: worsica-intermediate-stylecheck
+          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+      worsica_frontend:
+        container: frontend
+        tox:
+          testenv: worsica-portal-stylecheck
+          tox_file: '/usr/local/worsica_frontend/tox.ini'
+  qc_coverage:
+    repos:
+      worsica_processing:
+        container: intermediate
+        tox:
+          testenv: worsica-processing-coverage
+          tox_file: '/usr/local/worsica_web_products/tox.ini'
+      worsica_intermediate:
+        container: intermediate
+        tox:
+          testenv: worsica-intermediate-coverage
+          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+      worsica_frontend:
+        container: frontend
+        tox:
+          testenv: worsica-portal-coverage
+          tox_file: '/usr/local/worsica_frontend/tox.ini'
+  qc_functional:
+    repos:
+      worsica_processing:
+        container: intermediate
+        tox:
+          testenv: worsica-processing-unittest
+          tox_file: '/usr/local/worsica_web_products/tox.ini'
+      worsica-intermediate:
+        container: intermediate
+        tox:
+          testenv: worsica-intermediate-functional
+          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+      worsica_frontend:
+        container: frontend
+        tox:
+          testenv: worsica-portal-functional
+          tox_file: '/usr/local/worsica_frontend/tox.ini'
+  qc_security:
     repos:
       worsica-processing:
-        container: processing
+        container: intermediate
         tox:
-          testenv: stylecheck
-          tox_file: './tox.ini'
-  qc-functional:
-    repos:
-      worsica-processing:
-        container: processing
+          testenv: worsica-processing-security
+          tox_file: '/usr/local/worsica_web_products/tox.ini'
+      worsica-intermediate:
+        container: intermediate
         tox:
-          testenv: unittest
-          tox_file: './tox.ini'
-      worsica-portal:
-        container: celery
+          testenv: worsica-intermediate-functional
+          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+      worsica_frontend:
+        container: frontend
         tox:
-          testenv: functional
-          tox_file: './tox.ini'
-  qc-coverage:
-    repos:
-      worsica-processing:
-        container: processing
-        tox:
-          testenv: coverage
-          tox_file: './tox.ini'
-  qc-security:
-    repos:
-      worsica-processing:
-        container: processing
-        tox:
-          testenv: security
-          tox_file: './tox.ini'
-  qc-doc:
-    repos:
-      worsica-cicd:
-        container: processing 
-        commands:
-          - python setup.py build_sphinx
+          testenv: worsica-portal-security
+          tox_file: '/usr/local/worsica_frontend/tox.ini'
+#  qc_doc:
+#    repos:
+#      WORSICA_github_io:
+#        container: sphinx
+#        commands:
+#          - python setup.py build_sphinx
 
 environment:
-  GIT_COMMITTER_NAME: Person1
-  GIT_COMMITTER_EMAIL: person1@example.org
-  LANG: C.UTF-8
+  JPL_DOCKERPUSH: "essentials intermediate frontend"
+  JPL_IGNOREFAILURES: "push"
 
 timeout: 600

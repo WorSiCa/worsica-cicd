@@ -1,117 +1,106 @@
 version: "3"
 
 services:
-  processing:
-    image: "worsica/worsica-backend:worsica-processing-dev_latest"
-    container_name: "processing"
-    hostname: "processing"
+  essentials:
+    build:
+      context: "."
+      dockerfile: "./docker_essentials/aio_v4/Dockerfile.essentials"
+    image: "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
+
+  intermediate:
+    build:
+      context: "./worsica-intermediate"
+      dockerfile: "./docker_intermediate/aio_v4/Dockerfile.intermediate"
+      cache_from:
+        - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
+    image: "worsica/jenkins-worsica-intermediate:${GIT_BRANCH}"
+    container_name: "intermediate"
+    hostname: "intermediate"
     volumes:
+     - type: bind
+       source: worsica_web_intermediate
+       target: /usr/local/worsica_web_intermediate
      - type: bind
        source: worsica_web_products
        target: /usr/local/worsica_web_products
-  
-  celery:
-    image: "worsica/worsica-frontend:worsica-portal-dev_latest"
-    container_name: "celery"
-    hostname: "celery"
-    volumes:
-      - type: bind
-        source: worsica_web
-        target: /usr/local/worsica_web
-      - type: bind
-        source: hosts
-        target: /etc/hosts
-      - type: bind
-        source: worsica_web_products
-        target: /usr/local/worsica_web_products
-      - type: bind
-        source: syslog
-        target: /tmp/syslog.sock
-    ports:
-      - "127.0.0.1:8001:8001"
+    entrypoint: "/bin/bash"
+    command: "/usr/local/worsica_web_intermediate/worsica_runserver.sh"
+    depends_on:
+      - essentials
+      - postgis
+      - rabbitmq
     networks:
-      worsica_net:
-        ipv4_address: 172.16.238.1
-    entrypoint:
-      - "celery multi start w1 -A worsica_web -l info --concurrency=10 --max-tasks-per-child=1"
-    command: "python3 ./manage.py runserver 0.0.0.0:8001"
-    restart: "on-failure:5"
+      - worsica_net
+
+  frontend:
+    build:
+      context: "./worsica-frontend"
+      dockerfile: "./docker_frontend/aio_v4/Dockerfile.frontend"
+      cache_from:
+        - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
+    image: "worsica/jenkins-worsica-frontend:${GIT_BRANCH}"
+    container_name: "frontend"
+    hostname: "frontend"
+    volumes:
+     - type: bind
+       source: worsica_web
+       target: /usr/local/worsica_web
+     - type: bind
+       source: worsica_frontend
+       target: /usr/local/worsica_frontend
+    entrypoint: "/bin/bash"
+    command: "/usr/local/worsica_web/worsica_runserver.sh"
+    depends_on:
+      - essentials
+      - postgis
+      - rabbitmq
+      - intermediate
+    networks:
+      - worsica_net
 
   postgis:
-    image: "mdillon/postgis:9.2"
+    image: "mdillon/postgis:9.6"
+    container_name: "postgis"
     hostname: "postgis"
     volumes:
-      - type: bind
+      - type: volume
         source: database_data
-        target: /var/lib/postgresql/data:rw
-    ports:
-        - "127.0.0.1:5432:5432"
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
     networks:
-      worsica_net:
-        ipv4_address: 172.16.238.2
-      environment:
-          - "POSTGRES_PASSWORD=password"
-          - "LANG=en_US.utf8"
-          - "PGDATA=/var/lib/postgresql/data"
-      restart: "on-failure:5"
-
-  pgadmin:
-    image: "dpage/pgadmin4:4.5"
-    hostname: "pgadmin"
-    ports:
-      - "127.0.0.1:10080:80"
-      - "127.0.0.1:443:443"
-    networks:
-      worsica_net:
-        ipv4_address: 172.16.238.3
+      - worsica_net
     environment:
-      - "PGADMIN_DEFAULT_EMAIL=user@example.com"
-      - "PGADMIN_DEFAULT_PASSWORD=password"
-      - "LANG=C.UTF-8"
-      - "GPG_KEY=0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+      - "LANG=en_US.utf8"
+      - "PGDATA=/var/lib/postgresql/data"
     restart: "on-failure:5"
 
   rabbitmq:
     image: "rabbitmq:3.7-management"
-    hostname: "rabbitmq"
+    container_name: "rabbitmq"
+    hostname: "worsica-backend"
     volumes:
-        - type: bind
+        - type: volume
           source: rabbitmq_data
           target: /var/lib/rabbitmq/mnesia/rabbit@my-rabbit
-    ports:
-        - "127.0.0.1:8080:15672"
-        - "127.0.0.1:5672:5672"
     networks:
-      worsica_net:
-        ipv4_address: 172.16.238.4
+      - worsica_net
     environment:
-        - "RABBITMQ_SSL_CACERTFILE"
-        - "RABBITMQ_SSL_CERTFILE"
-        - "RABBITMQ_SSL_DEPTH"
-        - "RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT"
-        - "RABBITMQ_SSL_KEYFILE"
-        - "RABBITMQ_SSL_VERIFY"
-        - "RABBITMQ_DEFAULT_VHOST=my_vhost"
-        - "RABBITMQ_DEFAULT_USER=user"
-        - "RABBITMQ_DEFAULT_PASS=password"
+        - "RABBITMQ_DEFAULT_VHOST=corsica_vhost"
+        - "RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}"
+        - "RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}"
     restart: "on-failure:5"
 
-logging:
-  driver: syslog
-  options:
-    syslog-address: "unix:///tmp/syslog.sock"
-
 volumes:
-  syslog: /dev/log
-  hosts: /etc/hosts
-  worsica_web: ./worsica_web
-  worsica_web_products: ./worsica_web_products
-  database_data: ./database/data
-  rabbitmq_data: ./rabbitmq/data
+  worsica_web_intermediate: ./worsica_intermediate/worsica_web_intermediate
+  worsica_web: ./worsica_frontend/worsica_web
+  worsica_frontend: ./worsica_frontend
+  worsica_web_products: ./worsica_processing
+  database_data:
+  rabbitmq_data:
 
 networks:
   worsica_net:
     ipam:
       driver: default
-      config:
-        - subnet: "172.16.238.0/24"
