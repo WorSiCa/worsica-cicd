@@ -11,7 +11,7 @@ config:
       branch: development
       credentials_id: worsica-bot-github
     WORSICA_github_io:
-      repo: 'https://github.com:WORSICA/WORSICA.github.io'
+      repo: 'https://github.com/WORSICA/WORSICA.github.io'
       branch: development
   credentials:
       - id: worsica-bot-github
