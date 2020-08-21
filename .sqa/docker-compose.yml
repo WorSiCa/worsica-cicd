@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
   essentials:
@@ -17,12 +17,8 @@ services:
     container_name: "intermediate"
     hostname: "intermediate"
     volumes:
-     - type: bind
-       source: worsica_web_intermediate
-       target: /usr/local/worsica_web_intermediate
-     - type: bind
-       source: worsica_web_products
-       target: /usr/local/worsica_web_products
+     - ./worsica_intermediate/worsica_web_intermediate:/usr/local/worsica_web_intermediate
+     - ./worsica_processing:/usr/local/worsica_web_products
     entrypoint: "/bin/bash"
     command: "/usr/local/worsica_web_intermediate/worsica_runserver.sh"
     depends_on:
@@ -42,12 +38,8 @@ services:
     container_name: "frontend"
     hostname: "frontend"
     volumes:
-     - type: bind
-       source: worsica_web
-       target: /usr/local/worsica_web
-     - type: bind
-       source: worsica_frontend
-       target: /usr/local/worsica_frontend
+     - ./worsica_frontend/worsica_web:/usr/local/worsica_web
+     - ./worsica_frontend:/usr/local/worsica_frontend
     entrypoint: "/bin/bash"
     command: "/usr/local/worsica_web/worsica_runserver.sh"
     depends_on:
@@ -63,11 +55,7 @@ services:
     container_name: "postgis"
     hostname: "postgis"
     volumes:
-      - type: volume
-        source: database_data
-        target: /var/lib/postgresql/data
-        volume:
-          nocopy: true
+      - database_data:/var/lib/postgresql/data
     networks:
       - worsica_net
     environment:
@@ -81,9 +69,7 @@ services:
     container_name: "rabbitmq"
     hostname: "worsica-backend"
     volumes:
-        - type: volume
-          source: rabbitmq_data
-          target: /var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+        - rabbitmq_data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
     networks:
       - worsica_net
     environment:
@@ -93,10 +79,6 @@ services:
     restart: "on-failure:5"
 
 volumes:
-  worsica_web_intermediate: ./worsica_intermediate/worsica_web_intermediate
-  worsica_web: ./worsica_frontend/worsica_web
-  worsica_frontend: ./worsica_frontend
-  worsica_web_products: ./worsica_processing
   database_data:
   rabbitmq_data:
 
