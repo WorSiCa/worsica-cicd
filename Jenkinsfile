@@ -5,6 +5,10 @@ def projectConfig
 pipeline {
     agent any
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+    }
+
     stages {
         stage('SQA baseline dynamic stages') {
             when {
