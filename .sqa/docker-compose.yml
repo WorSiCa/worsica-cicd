@@ -10,7 +10,7 @@ services:
   intermediate:
     build:
       context: "./worsica_intermediate"
-      dockerfile: "./docker_intermediate/aio_v4/Dockerfile.intermediate"
+      dockerfile: "./docker_intermediate/aio_v4/Dockerfile.jenkins"
       cache_from:
         - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
     image: "worsica/jenkins-worsica-intermediate:${GIT_BRANCH}"
@@ -31,7 +31,7 @@ services:
   frontend:
     build:
       context: "./worsica_frontend"
-      dockerfile: "./docker_frontend/aio_v4/Dockerfile.frontend"
+      dockerfile: "./docker_frontend/aio_v4/Dockerfile.jenkins"
       cache_from:
         - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
     image: "worsica/jenkins-worsica-frontend:${GIT_BRANCH}"
