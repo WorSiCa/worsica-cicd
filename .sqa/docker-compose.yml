@@ -7,6 +7,17 @@ services:
       dockerfile: "./docker_essentials/aio_v4/Dockerfile.essentials"
     image: "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
 
+  sphinx:
+    build:
+      context: "WORSICA_github_io"
+      dockerfile: "docker_sphinx/aio_v4/Dockerfile.jenkins"
+      cache_from:
+        - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
+    image: "worsica/jenkins-worsica-sphinx:${GIT_BRANCH}"
+    volumes:
+      - ./WORSICA_github_io:/usr/local/WORSICA.github.io
+    command: sleep infinity
+
   intermediate:
     build:
       context: "./worsica_intermediate"

@@ -79,12 +79,12 @@ sqa_criteria:
           testenv:
             - worsica-processing-unittest
           tox_file: '/usr/local/worsica_web_products/tox.ini'
-      worsica-intermediate:
-        container: intermediate
-        tox:
-          testenv:
-            - worsica-intermediate-functional
-          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+#      worsica-intermediate:
+#        container: intermediate
+#        tox:
+#          testenv:
+#            - worsica-intermediate-functional
+#          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
       worsica_frontend:
         container: frontend
         tox:
@@ -111,12 +111,12 @@ sqa_criteria:
           testenv:
             - worsica-portal-security
           tox_file: '/usr/local/worsica_web/tox.ini'
-#  qc_doc:
-#    repos:
-#      WORSICA_github_io:
-#        container: sphinx
-#        commands:
-#          - python setup.py build_sphinx
+  qc_doc:
+    repos:
+      WORSICA_github_io:
+        container: sphinx
+        commands:
+          - make html
 
 environment:
   JPL_DOCKERPUSH: "essentials intermediate frontend"
