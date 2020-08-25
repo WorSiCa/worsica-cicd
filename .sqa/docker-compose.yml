@@ -17,7 +17,7 @@ services:
     container_name: "intermediate"
     hostname: "intermediate"
     volumes:
-     - ./worsica_intermediate/worsica_web_intermediate:/usr/local/worsica_web_intermediate
+     - ./worsica_intermediate:/usr/local/worsica_web_intermediate
      - ./worsica_processing:/usr/local/worsica_web_products
     entrypoint: "/bin/bash"
     command: "/usr/local/worsica_web_intermediate/worsica_runserver.sh"
@@ -38,8 +38,7 @@ services:
     container_name: "frontend"
     hostname: "frontend"
     volumes:
-     - ./worsica_frontend/worsica_web:/usr/local/worsica_web
-     - ./worsica_frontend:/usr/local/worsica_frontend
+     - ./worsica_frontend:/usr/local/worsica_web
     entrypoint: "/bin/bash"
     command: "/usr/local/worsica_web/worsica_runserver.sh"
     depends_on:
