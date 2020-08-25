@@ -2,6 +2,10 @@ config:
   node_agent: 'docker_compose'
   deploy_template: '.sqa/docker-compose.yml'
   project_repos:
+    worsica_processing:
+      repo: 'https://github.com/WORSICA/worsica-processing'
+      branch: development
+      credentials_id: worsica-bot-github
     worsica_intermediate:
       repo: 'https://github.com/WORSICA/worsica-intermediate'
       branch: development
