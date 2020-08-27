@@ -121,5 +121,8 @@ sqa_criteria:
 environment:
   JPL_DOCKERPUSH: "essentials intermediate frontend"
   JPL_IGNOREFAILURES: "push"
+  JPL_DOCKERFORCEBUILD: "enabled"
+  JPL_DOCKERUSER: "${DH_USER}"
+  JPL_DOCKERPASS: "${DH_PASSWORD}"
 
 timeout: 600

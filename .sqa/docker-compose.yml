@@ -18,6 +18,23 @@ services:
       - ./WORSICA_github_io:/usr/local/WORSICA.github.io
     command: sleep infinity
 
+  processing:
+    build:
+      context: "./worsica_processing"
+      dockerfile: "./docker_backend/aio_v4/Dockerfile.jenkins"
+      cache_from:
+        - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
+    image: "worsica/jenkins-worsica-processing:${GIT_BRANCH}"
+    container_name: "processing"
+    hostname: "processing"
+    volumes:
+     - ./worsica_processing:/usr/local/worsica_web_products
+    command: sleep infinity
+    depends_on:
+      - essentials
+    networks:
+      - worsica_net
+
   intermediate:
     build:
       context: "./worsica_intermediate"
