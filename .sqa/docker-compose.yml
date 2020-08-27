@@ -1,0 +1,98 @@
+version: "3.7"
+
+services:
+  essentials:
+    build:
+      context: "."
+      dockerfile: "./docker_essentials/aio_v4/Dockerfile.essentials"
+    image: "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
+
+  sphinx:
+    build:
+      context: "WORSICA_github_io"
+      dockerfile: "docker_sphinx/aio_v4/Dockerfile.jenkins"
+      cache_from:
+        - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
+    image: "worsica/jenkins-worsica-sphinx:${GIT_BRANCH}"
+    volumes:
+      - ./WORSICA_github_io:/usr/local/WORSICA.github.io
+    command: sleep infinity
+
+  intermediate:
+    build:
+      context: "./worsica_intermediate"
+      dockerfile: "./docker_intermediate/aio_v4/Dockerfile.jenkins"
+      cache_from:
+        - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
+    image: "worsica/jenkins-worsica-intermediate:${GIT_BRANCH}"
+    container_name: "intermediate"
+    hostname: "intermediate"
+    volumes:
+     - ./worsica_intermediate:/usr/local/worsica_web_intermediate
+     - ./worsica_processing:/usr/local/worsica_web_products
+    entrypoint: "/bin/bash"
+    command: "/usr/local/worsica_web_intermediate/worsica_runserver.sh"
+    depends_on:
+      - essentials
+      - postgis
+      - rabbitmq
+    networks:
+      - worsica_net
+
+  frontend:
+    build:
+      context: "./worsica_frontend"
+      dockerfile: "./docker_frontend/aio_v4/Dockerfile.jenkins"
+      cache_from:
+        - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
+    image: "worsica/jenkins-worsica-frontend:${GIT_BRANCH}"
+    container_name: "frontend"
+    hostname: "frontend"
+    volumes:
+     - ./worsica_frontend:/usr/local/worsica_web
+    entrypoint: "/bin/bash"
+    command: "/usr/local/worsica_web/worsica_runserver.sh"
+    depends_on:
+      - essentials
+      - postgis
+      - rabbitmq
+      - intermediate
+    networks:
+      - worsica_net
+
+  postgis:
+    image: "mdillon/postgis:9.6"
+    container_name: "postgis"
+    hostname: "postgis"
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    networks:
+      - worsica_net
+    environment:
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+      - "LANG=en_US.utf8"
+      - "PGDATA=/var/lib/postgresql/data"
+    restart: "on-failure:5"
+
+  rabbitmq:
+    image: "rabbitmq:3.7-management"
+    container_name: "rabbitmq"
+    hostname: "worsica-backend"
+    volumes:
+        - rabbitmq_data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+    networks:
+      - worsica_net
+    environment:
+        - "RABBITMQ_DEFAULT_VHOST=corsica_vhost"
+        - "RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}"
+        - "RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}"
+    restart: "on-failure:5"
+
+volumes:
+  database_data:
+  rabbitmq_data:
+
+networks:
+  worsica_net:
+    ipam:
+      driver: default

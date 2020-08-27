@@ -1,0 +1,14 @@
+title: WORSICA CICD
+description: > # this means to ignore newlines until "show_downloads:"
+  WORSICA continuous integration and continuous deployment.
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-cayman
+url: https://worsica.github.io/worsica-cicd/
+plugins:
+  - jekyll-sitemap
+  - jekyll-redirect-from
+exclude:
+- .gitignore
+- .jekyll-cache
+- README.md
