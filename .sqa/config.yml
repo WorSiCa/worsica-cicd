@@ -123,4 +123,4 @@ environment:
   JPL_IGNOREFAILURES: "push"
   JPL_DOCKERFORCEBUILD: "enabled"
 
-timeout: 600
+timeout: 1200
