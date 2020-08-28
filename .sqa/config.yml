@@ -121,6 +121,6 @@ sqa_criteria:
 environment:
   JPL_DOCKERPUSH: "essentials intermediate frontend"
   JPL_IGNOREFAILURES: "push"
-  JPL_DOCKERFORCEBUILD: "enabled"
+#  JPL_DOCKERFORCEBUILD: "enabled"
 
 timeout: 1200
