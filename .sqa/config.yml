@@ -22,8 +22,8 @@ config:
         username_var: GIT_USER
         password_var: GIT_TOKEN
       - id: worsica-bot-dockerhub
-        username_var: DH_USER
-        password_var: DH_PASSWORD
+        username_var: JPL_DOCKERUSER
+        password_var: JPL_DOCKERPASS
       - id: worsica-postgis-password
         variable: POSTGRES_PASSWORD
       - id: worsica-rabbitmq-corsica
@@ -122,7 +122,5 @@ environment:
   JPL_DOCKERPUSH: "essentials intermediate frontend"
   JPL_IGNOREFAILURES: "push"
   JPL_DOCKERFORCEBUILD: "enabled"
-  JPL_DOCKERUSER: "${DH_USER}"
-  JPL_DOCKERPASS: "${DH_PASSWORD}"
 
 timeout: 600
