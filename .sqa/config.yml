@@ -31,7 +31,7 @@ config:
         password_var: RABBITMQ_PASSWORD
       - type: file
         id: worsica-sentinel-secret
-        variable: WORSICA-SSECRET-FILE
+        variable: WORSICA_SSECRET_FILE
 
 sqa_criteria:
   qc_style:
