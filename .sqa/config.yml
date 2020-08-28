@@ -29,7 +29,8 @@ config:
       - id: worsica-rabbitmq-corsica
         username_var: RABBITMQ_USER
         password_var: RABBITMQ_PASSWORD
-      - id: worsica-sentinel-secret
+      - type: file
+        id: worsica-sentinel-secret
         variable: WORSICA-SSECRET-FILE
 
 sqa_criteria:
