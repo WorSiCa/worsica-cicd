@@ -34,7 +34,7 @@ sqa_criteria:
   qc_style:
     repos:
       worsica_processing:
-        container: intermediate
+        container: processing
         tox:
           testenv:
             - worsica-processing-stylecheck
@@ -54,7 +54,7 @@ sqa_criteria:
   qc_coverage:
     repos:
       worsica_processing:
-        container: intermediate
+        container: processing
         tox:
           testenv:
             - worsica-processing-coverage
@@ -74,7 +74,7 @@ sqa_criteria:
   qc_functional:
     repos:
       worsica_processing:
-        container: intermediate
+        container: processing
         tox:
           testenv:
             - worsica-processing-unittest
@@ -94,7 +94,7 @@ sqa_criteria:
   qc_security:
     repos:
       worsica-processing:
-        container: intermediate
+        container: processing
         tox:
           testenv:
             - worsica-processing-security
