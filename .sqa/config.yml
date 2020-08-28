@@ -29,6 +29,8 @@ config:
       - id: worsica-rabbitmq-corsica
         username_var: RABBITMQ_USER
         password_var: RABBITMQ_PASSWORD
+      - id: worsica-sentinel-secret
+        variable: WORSICA-SSECRET-FILE
 
 sqa_criteria:
   qc_style:
@@ -51,26 +53,7 @@ sqa_criteria:
           testenv:
             - worsica-portal-stylecheck
           tox_file: '/usr/local/worsica_web/tox.ini'
-  qc_coverage:
-    repos:
-      worsica_processing:
-        container: processing
-        tox:
-          testenv:
-            - worsica-processing-coverage
-          tox_file: '/usr/local/worsica_web_products/tox.ini'
-      worsica_intermediate:
-        container: intermediate
-        tox:
-          testenv:
-            - worsica-intermediate-coverage
-          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
-      worsica_frontend:
-        container: frontend
-        tox:
-          testenv:
-            - worsica-portal-coverage
-          tox_file: '/usr/local/worsica_web/tox.ini'
+          
   qc_functional:
     repos:
       worsica_processing:
@@ -91,6 +74,28 @@ sqa_criteria:
           testenv:
             - worsica-portal-functional
           tox_file: '/usr/local/worsica_web/tox.ini'
+          
+  qc_coverage:
+    repos:
+      worsica_processing:
+        container: processing
+        tox:
+          testenv:
+            - worsica-processing-coverage
+          tox_file: '/usr/local/worsica_web_products/tox.ini'
+#      worsica_intermediate:
+#        container: intermediate
+#        tox:
+#          testenv:
+#            - worsica-intermediate-coverage
+#          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+      worsica_frontend:
+        container: frontend
+        tox:
+          testenv:
+            - worsica-portal-coverage
+          tox_file: '/usr/local/worsica_web/tox.ini'
+
   qc_security:
     repos:
       worsica-processing:
@@ -103,7 +108,7 @@ sqa_criteria:
         container: intermediate
         tox:
           testenv:
-            - worsica-intermediate-functional
+            - worsica-intermediate-scurity
           tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
       worsica_frontend:
         container: frontend
