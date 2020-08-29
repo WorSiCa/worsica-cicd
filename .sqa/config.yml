@@ -125,7 +125,7 @@ sqa_criteria:
           - make html
 
 environment:
-  JPL_DOCKERPUSH: "essentials intermediate frontend"
+  JPL_DOCKERPUSH: "essentials processing intermediate frontend"
   JPL_IGNOREFAILURES: "push"
 #  JPL_DOCKERFORCEBUILD: "enabled"
 
