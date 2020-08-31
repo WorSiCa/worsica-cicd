@@ -6,6 +6,7 @@ pipeline {
     agent any
 
     options {
+        lock('worsica')
         throttle(['StandaloneByNode'])
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
