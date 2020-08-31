@@ -1,4 +1,4 @@
-@Library(['github.com/indigo-dc/jenkins-pipeline-library@feature/docker_compose_push']) _
+@Library(['github.com/indigo-dc/jenkins-pipeline-library@test/docker_compose_push']) _
 
 def projectConfig
 
