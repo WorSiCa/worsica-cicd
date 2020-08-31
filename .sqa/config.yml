@@ -109,7 +109,7 @@ sqa_criteria:
         container: intermediate
         tox:
           testenv:
-            - worsica-intermediate-scurity
+            - worsica-intermediate-security
           tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
       worsica_frontend:
         container: frontend
