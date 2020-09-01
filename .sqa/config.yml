@@ -42,12 +42,12 @@ sqa_criteria:
 #          testenv:
 #            - worsica-processing-unittest
 #          tox_file: '/usr/local/worsica_web_products/tox.ini'
-#      worsica-intermediate:
-#        container: intermediate
-#        tox:
-#          testenv:
-#            - worsica-intermediate-functional
-#          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+      worsica-intermediate:
+        container: intermediate
+        tox:
+          testenv:
+            - worsica-intermediate-functional
+          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
       worsica_frontend:
         container: frontend
         tox:
@@ -63,12 +63,12 @@ sqa_criteria:
 #          testenv:
 #            - worsica-processing-coverage
 #          tox_file: '/usr/local/worsica_web_products/tox.ini'
-#      worsica_intermediate:
-#        container: intermediate
-#        tox:
-#          testenv:
-#            - worsica-intermediate-coverage
-#          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+      worsica_intermediate:
+        container: intermediate
+        tox:
+          testenv:
+            - worsica-intermediate-coverage
+          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
       worsica_frontend:
         container: frontend
         tox:

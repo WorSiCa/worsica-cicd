@@ -55,6 +55,8 @@ services:
       - rabbitmq
     networks:
       - worsica_net
+    ports:
+      - "8002:8002"
 
   frontend:
     build:
@@ -76,6 +78,8 @@ services:
       - intermediate
     networks:
       - worsica_net
+    ports:
+      - "8001:8001"
 
   postgis:
     image: "mdillon/postgis:9.6"
