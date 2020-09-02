@@ -21,7 +21,7 @@ ENV NUMPY_VERSION 1.15.2
 #epel-release is not needed since fedora already includes them, epel-release is only for rhel and centos
 
 RUN yum update -y \
-    && yum install -y python make zlib-devel bzip2-devel openssl-devel readline-devel ncurses-devel sqlite-devel gdbm-devel db4-devel expat-devel libpcap-devel xz-devel pcre-devel libffi-devel gcc libXext libSM libXrender findutils \
+    && yum install -y python make zlib-devel bzip2-devel openssl-devel readline-devel ncurses-devel sqlite-devel gdbm-devel db4-devel expat-devel libpcap-devel xz-devel pcre-devel libffi-devel gcc libXext libSM libXrender findutils less procps htop \
 #Install Python Virtual Environment (venv)
     && cd $HOME \
     && curl -kL https://raw.githubusercontent.com/saghul/pythonz/master/pythonz-install | bash \
