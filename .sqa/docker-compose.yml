@@ -124,7 +124,7 @@ services:
 #    restart: "on-failure:5"
 
 #    dataverse_postgres:
-#        build:  postgresql/
+#        build:  ./dataverse-docker/postgresql/
 #        container_name: db
 #        ports:
 #        - "5435:5432"
@@ -136,7 +136,7 @@ services:
 #        networks:
 #         - worsica_net
 #    dataverse_solr:
-#        build: solr7/
+#        build: ./dataverse-docker/solr7/
 #        container_name: solr
 #        ports:
 #        - "8985:8983"
@@ -149,7 +149,7 @@ services:
 #         - worsica_net
 #  dataverse:
 #    image: "dataverse"
-#    build: dataversedock/
+#    build: ./dataverse-docker/dataversedock/
 #    container_name: "dataverse"
 #    hostname: "dataverse"
 #    networks:
