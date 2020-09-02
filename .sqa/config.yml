@@ -32,6 +32,12 @@ config:
       - id: worsica-sentinel-secret
         username_var: WORSICA_SSECRET_USER
         password_var: WORSICA_SSECRET_PASSWORD
+      - id: worsica-nextcloud-credentials
+        username_var: WORSICA_NEXTCLOUD_USER
+        password_var: WORSICA_NEXTCLOUD_PASSWORD
+      - id: worsica-dataverse-credentials
+        username_var: WORSICA_DATAVERSE_USER
+        password_var: WORSICA_DATAVERSE_PASSWORD
 
 sqa_criteria:
   qc_functional:
