@@ -9,7 +9,7 @@ services:
 
   sphinx:
     build:
-      context: "./WORSICA.github.io"
+      context: "./WORSICA_github_io"
       dockerfile: "./docker_sphinx/aio_v4/Dockerfile.jenkins"
       cache_from:
         - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
