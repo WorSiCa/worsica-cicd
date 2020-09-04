@@ -25,7 +25,7 @@ config:
       - id: worsica-bot-github
         username_var: GIT_USER
         password_var: GIT_TOKEN
-      - id: worsica-bot-dockerhub
+      - id: worsica-bot-dockerhub-token
         username_var: JPL_DOCKERUSER
         password_var: JPL_DOCKERPASS
       - id: worsica-postgis-password
