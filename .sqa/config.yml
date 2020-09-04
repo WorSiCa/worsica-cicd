@@ -44,7 +44,7 @@ config:
         password_var: WORSICA_DATAVERSE_PASSWORD
 
 sqa_criteria:
-  qc_functional:
+  qc_functional: #functional/unitary + coverage
     repos:
       worsica_processing:
         container: processing
@@ -65,26 +65,26 @@ sqa_criteria:
             - worsica-portal-functional
           tox_file: '/usr/local/worsica_web/tox.ini'
           
-  qc_coverage:
-    repos:
-      worsica_processing:
-        container: processing
-        tox:
-          testenv:
-            - worsica-processing-coverage
-          tox_file: '/usr/local/worsica_web_products/tox.ini'
-      worsica_intermediate:
-        container: intermediate
-        tox:
-          testenv:
-            - worsica-intermediate-coverage
-          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
-      worsica_frontend:
-        container: frontend
-        tox:
-          testenv:
-            - worsica-portal-coverage
-          tox_file: '/usr/local/worsica_web/tox.ini'
+#  qc_coverage:
+#    repos:
+#      worsica_processing:
+#        container: processing
+#        tox:
+#          testenv:
+#            - worsica-processing-coverage
+#          tox_file: '/usr/local/worsica_web_products/tox.ini'
+#      worsica_intermediate:
+#        container: intermediate
+#        tox:
+#          testenv:
+#            - worsica-intermediate-coverage
+#          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+#      worsica_frontend:
+#        container: frontend
+#        tox:
+#          testenv:
+#            - worsica-portal-coverage
+#          tox_file: '/usr/local/worsica_web/tox.ini'
 
 #  qc_style:
 #    repos:
