@@ -139,8 +139,8 @@ sqa_criteria:
 
 environment:
   JPL_DOCKERPUSH: "essentials processing intermediate frontend sphinx"
-  #JPL_IGNOREFAILURES: "push"
-  JPL_DOCKERFORCEBUILD: "enabled"
+  #JPL_IGNOREFAILURES: "defined"
+  #JPL_DOCKERFORCEBUILD: "defined"
   JPL_WORKSPACEDEBUG: "false"
   #JPL_WORKSPACEDEBUGTIMEOUT: 15
 
