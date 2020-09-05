@@ -138,10 +138,10 @@ sqa_criteria:
 #          - git push
 
 environment:
-  JPL_DOCKERPUSH: "essentials processing intermediate frontend"
-  JPL_IGNOREFAILURES: "push"
+  JPL_DOCKERPUSH: "essentials processing intermediate frontend sphinx"
+  #JPL_IGNOREFAILURES: "push"
   JPL_DOCKERFORCEBUILD: "enabled"
-  JPL_WORKSPACEDEBUG: false
+  JPL_WORKSPACEDEBUG: "false"
   #JPL_WORKSPACEDEBUGTIMEOUT: 15
 
 timeout: 1200
