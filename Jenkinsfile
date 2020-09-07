@@ -3,7 +3,7 @@
 def projectConfig
 
 pipeline {
-    agent any
+    agent { label 'worsica' }
 
     options {
         lock('worsica')
