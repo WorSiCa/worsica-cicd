@@ -58,12 +58,12 @@ sqa_criteria:
           testenv:
             - worsica-intermediate-functional
           tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
-      worsica_frontend:
-        container: frontend
-        tox:
-          testenv:
-            - worsica-portal-functional
-          tox_file: '/usr/local/worsica_web/tox.ini'
+#      worsica_frontend:
+#        container: frontend
+#        tox:
+#          testenv:
+#            - worsica-portal-functional
+#          tox_file: '/usr/local/worsica_web/tox.ini'
           
 #  qc_coverage:
 #    repos:
