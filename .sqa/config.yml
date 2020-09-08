@@ -132,7 +132,7 @@ sqa_criteria:
       WORSICA_github_io:
         container: sphinx
         commands:
-          - bash -c "env GIT_ASKPASS=/usr/local/WORSICA.github.io/.git_credential_helper.sh && git checkout development && sphinx-multiversion -c source/ source html && git checkout gh-pages && cd /usr/local/WORSICA.github.io/html && (for dirname in *; do cp -r "/usr/local/WORSICA.github.io/html/$dirname" "/usr/local/WORSICA.github.io/"; done) && cd /usr/local/WORSICA.github.io && rm -rf html && git add --all && git config --global user.email 'rjmartins@lnec.pt' && git commit -m 'Added HTML docs' && git push -u origin gh-pages"
+          - bash -c "env GIT_ASKPASS=/usr/local/WORSICA.github.io/.git_credential_helper.sh && git checkout development && sphinx-multiversion -c source/ source html && git checkout gh-pages && cd html && (for dirname in *; do cp -r "./$dirname" ..; done) && cd .. && rm -rf html && git add --all && git config --global user.email 'rjmartins@lnec.pt' && git commit -m 'Added HTML docs' && git push -u origin gh-pages"
 
 environment:
   JPL_DOCKERPUSH: "essentials processing intermediate frontend sphinx"
