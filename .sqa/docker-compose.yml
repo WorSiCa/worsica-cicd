@@ -14,9 +14,12 @@ services:
       cache_from:
         - "worsica/jenkins-worsica-essentials:${GIT_BRANCH}"
     image: "worsica/jenkins-worsica-sphinx:${GIT_BRANCH}"
+    container_name: "sphinx"
     volumes:
       - ./WORSICA_github_io:/usr/local/WORSICA.github.io
     command: sleep infinity
+    depends_on:
+      - essentials
 
   processing:
     build:
