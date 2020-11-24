@@ -1,4 +1,4 @@
-@Library(['github.com/indigo-dc/jenkins-pipeline-library@test/docker_compose_push']) _
+@Library(['github.com/indigo-dc/jenkins-pipeline-library@feature/GitSCM_LocalBranch']) _
 
 def projectConfig
 
