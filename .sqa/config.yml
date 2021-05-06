@@ -86,26 +86,26 @@ sqa_criteria:
 #            - worsica-portal-coverage
 #          tox_file: '/usr/local/worsica_web/tox.ini'
 
-#  qc_style:
-#    repos:
-#      worsica_processing:
-#        container: processing
-#        tox:
-#          testenv:
-#            - worsica-processing-stylecheck
-#          tox_file: '/usr/local/worsica_web_products/tox.ini'
-#      worsica_intermediate:
-#        container: intermediate
-#        tox:
-#          testenv:
-#            - worsica-intermediate-stylecheck
-#          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
-#      worsica_frontend:
-#        container: frontend
-#        tox:
-#          testenv:
-#            - worsica-portal-stylecheck
-#          tox_file: '/usr/local/worsica_web/tox.ini'
+  qc_style:
+    repos:
+      worsica_processing:
+        container: processing
+        tox:
+          testenv:
+            - worsica-processing-stylecheck
+          tox_file: '/usr/local/worsica_web_products/tox.ini'
+      worsica_intermediate:
+        container: intermediate
+        tox:
+          testenv:
+            - worsica-intermediate-stylecheck
+          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+      worsica_frontend:
+        container: frontend
+        tox:
+          testenv:
+            - worsica-portal-stylecheck
+          tox_file: '/usr/local/worsica_web/tox.ini'
           
 #  qc_security:
 #    repos:
