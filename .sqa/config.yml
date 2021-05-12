@@ -44,14 +44,8 @@ config:
         password_var: WORSICA_DATAVERSE_PASSWORD
 
 sqa_criteria:
-  qc_functional: #functional/unitary + coverage
+  qc_functional: #functional
     repos:
-      worsica_processing:
-        container: processing
-        tox:
-          testenv:
-            - worsica-processing-unittest
-          tox_file: '/usr/local/worsica_web_products/tox.ini'
       worsica-intermediate:
         container: intermediate
         tox:
@@ -65,6 +59,16 @@ sqa_criteria:
             - worsica-portal-functional
           tox_file: '/usr/local/worsica_web/tox.ini'
           
+  qc_unit: #unitary + coverage
+    repos:
+      worsica_processing:
+        container: processing
+        tox:
+          testenv:
+            - worsica-processing-unittest
+          tox_file: '/usr/local/worsica_web_products/tox.ini'
+
+#deprecated as this will be only applied to unitary          
 #  qc_coverage:
 #    repos:
 #      worsica_processing:
@@ -107,26 +111,27 @@ sqa_criteria:
             - worsica-portal-stylecheck
           tox_file: '/usr/local/worsica_web/tox.ini'
           
-#  qc_security:
-#    repos:
-#      worsica-processing:
-#        container: processing
-#        tox:
-#          testenv:
-#            - worsica-processing-security
-#          tox_file: '/usr/local/worsica_web_products/tox.ini'
-#      worsica-intermediate:
-#        container: intermediate
-#        tox:
-#          testenv:
-#            - worsica-intermediate-security
-#          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
-#      worsica_frontend:
-#        container: frontend
-#        tox:
-#          testenv:
-#            - worsica-portal-security
-#          tox_file: '/usr/local/worsica_web/tox.ini'
+  qc_security:
+    repos:
+      worsica-processing:
+        container: processing
+        tox:
+          testenv:
+            - worsica-processing-security
+          tox_file: '/usr/local/worsica_web_products/tox.ini'
+      worsica-intermediate:
+        container: intermediate
+        tox:
+          testenv:
+            - worsica-intermediate-security
+          tox_file: '/usr/local/worsica_web_intermediate/tox.ini'
+      worsica_frontend:
+        container: frontend
+        tox:
+          testenv:
+            - worsica-portal-security
+          tox_file: '/usr/local/worsica_web/tox.ini'
+
   qc_doc:
     repos:
       WORSICA_github_io:
@@ -137,7 +142,7 @@ sqa_criteria:
 environment:
   JPL_DOCKERPUSH: "essentials processing intermediate frontend sphinx"
   #JPL_IGNOREFAILURES: "defined"
-  JPL_DOCKERFORCEBUILD: "enabled"
+  #JPL_DOCKERFORCEBUILD: "enabled"
   JPL_WORKSPACEDEBUG: "true"
   JPL_WORKSPACEDEBUGTIMEOUT: 45
 
