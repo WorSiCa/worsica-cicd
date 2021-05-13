@@ -44,14 +44,8 @@ config:
         password_var: WORSICA_DATAVERSE_PASSWORD
 
 sqa_criteria:
-  qc_functional: #functional/unitary + coverage
+  qc_functional: #functional
     repos:
-      worsica_processing:
-        container: processing
-        tox:
-          testenv:
-            - worsica-processing-unittest
-          tox_file: '/usr/local/worsica_web_products/tox.ini'
       worsica-intermediate:
         container: intermediate
         tox:
@@ -65,10 +59,15 @@ sqa_criteria:
             - worsica-portal-functional
           tox_file: '/usr/local/worsica_web/tox.ini'
           
-#deprecated as this will be only applied to unitary          
-#  qc_coverage:
-#    repos:
-#      worsica_processing:
+#TODO: rename qc_coverage to qc_unit      
+  qc_coverage: #unitary + coverage
+    repos:
+      worsica_processing:
+        container: processing
+        tox:
+          testenv:
+            - worsica-processing-unittest
+          tox_file: '/usr/local/worsica_web_products/tox.ini'
 #        container: processing
 #        tox:
 #          testenv:
