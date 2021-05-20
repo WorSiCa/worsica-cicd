@@ -21,7 +21,7 @@ pipeline {
             }
             steps {
                 script {
-                    projectConfig = pipelineConfig()
+                    projectConfig = pipelineConfig([ scmConfigs: [ localBranch: true ] ])
                     buildStages(projectConfig)
                 }
             }
