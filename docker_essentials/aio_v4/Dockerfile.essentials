@@ -36,8 +36,9 @@ RUN yum update -y \
 	gunicorn==${GUNICORN_VERSION} \n\
         sentinelsat==${SENTINELSAT_VERSION} \n\
 	tox " >> requirements-essential-pip.txt \
+    && $HOME/worsica_web-py363_venv/bin/pip3 install --upgrade pip \
     && $HOME/worsica_web-py363_venv/bin/pip3 install --no-cache-dir -r requirements-essential-pip.txt \
-   #&& $HOME/worsica_web-py363_venv/bin/pip3 install --upgrade pip
+
 #Cleanup time
     && yum clean all --enablerepo='*' \
     && rm -rf /var/tmp/* \
