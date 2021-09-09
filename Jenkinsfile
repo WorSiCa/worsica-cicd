@@ -1,4 +1,4 @@
-@Library(['github.com/indigo-dc/jenkins-pipeline-library@release/2.1.0']) _
+@Library(['github.com/indigo-dc/jenkins-pipeline-library@stable/2.1.0']) _
 
 def projectConfig
 
@@ -21,7 +21,7 @@ pipeline {
             }
             steps {
                 script {
-                    projectConfig = pipelineConfig([ scmConfigs: [ localBranch: true ] ])
+                    projectConfig = pipelineConfig()
                     buildStages(projectConfig)
                 }
             }
