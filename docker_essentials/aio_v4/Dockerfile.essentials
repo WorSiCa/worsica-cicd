@@ -37,6 +37,7 @@ RUN yum update -y \
         sentinelsat==${SENTINELSAT_VERSION} \n\
 	tox " >> requirements-essential-pip.txt \
     && $HOME/worsica_web-py363_venv/bin/pip3 install --upgrade pip \
+    && $HOME/worsica_web-py363_venv/bin/pip3 install setuptools==57.0.0 \
     && $HOME/worsica_web-py363_venv/bin/pip3 install --no-cache-dir -r requirements-essential-pip.txt \
 
 #Cleanup time
