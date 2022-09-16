@@ -35,6 +35,7 @@ RUN yum update -y \
         numpy==${NUMPY_VERSION} \n\
 	gunicorn==${GUNICORN_VERSION} \n\
         sentinelsat==${SENTINELSAT_VERSION} \n\
+	protobuf==3.19.4 \n\
 	tox " >> requirements-essential-pip.txt \
     && $HOME/worsica_web-py363_venv/bin/pip3 install --upgrade pip \
     && $HOME/worsica_web-py363_venv/bin/pip3 install setuptools==57.0.0 \
