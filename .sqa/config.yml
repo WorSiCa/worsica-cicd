@@ -142,4 +142,4 @@ environment:
   JPL_WORKSPACEDEBUG: "true"
   JPL_WORKSPACEDEBUGTIMEOUT: 120
 
-timeout: 1200
+timeout: 7200
