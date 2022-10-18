@@ -30,6 +30,9 @@ config:
         password_var: JPL_DOCKERPASS
       - id: worsica-postgis-password
         variable: POSTGRES_PASSWORD
+      - id: worsica-database-credentials
+      	username_var: POSTGRES_WORSICA_DB_USER
+        password_var: POSTGRES_WORSICA_DB_PWD
       - id: worsica-rabbitmq-corsica
         username_var: RABBITMQ_USER
         password_var: RABBITMQ_PASSWORD
@@ -42,6 +45,29 @@ config:
       - id: worsica-dataverse-credentials
         username_var: WORSICA_DATAVERSE_USER
         password_var: WORSICA_DATAVERSE_PASSWORD
+      - id: worsica-frontend-secrets-sensitive-jenkins
+        type: file
+        variable: WORSICA_FRONTEND_SETTINGS_SENSITIVE_FILE
+      - id: worsica-frontend-selenium
+        username_var: WORSICA_FRONTEND_SELENIUM_USERNAME
+        password_var: WORSICA_FRONTEND_SELENIUM_PWD
+      - id: worsica-frontend-superuser
+        username_var: WORSICA_FRONTEND_SUPERUSER_USERNAME
+        password_var: WORSICA_FRONTEND_SUPERUSER_PWD        
+      - id: worsica-intermediate-secrets-sensitive-jenkins
+        type: file
+        variable: WORSICA_INTERMEDIATE_SETTINGS_SENSITIVE_FILE
+      - id: worsica-intermediate-selenium
+        username_var: WORSICA_INTERMEDIATE_SELENIUM_USERNAME
+        password_var: WORSICA_INTERMEDIATE_SELENIUM_PWD
+      - id: worsica-intermediate-superuser
+        username_var: WORSICA_INTERMEDIATE_SUPERUSER_USERNAME
+        password_var: WORSICA_INTERMEDIATE_SUPERUSER_PWD
+      - id: worsica-processing-gcp-key
+        type: file
+        variable: WORSICA_PROCESSING_GCP_KEY_FILE
+      
+      
 
 sqa_criteria:
   qc_functional: #functional

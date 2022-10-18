@@ -32,6 +32,7 @@ services:
     hostname: "processing"
     volumes:
      - ./worsica_processing:/usr/local/worsica_web_products
+     - /jenkins/workspace:/jenkins/workspace
     command: sleep infinity
     depends_on:
       - essentials
@@ -50,6 +51,7 @@ services:
     volumes:
      - ./worsica_intermediate:/usr/local/worsica_web_intermediate
      - ./worsica_processing:/usr/local/worsica_web_products
+     - /jenkins/workspace:/jenkins/workspace
     entrypoint: "/bin/bash"
     command: "/usr/local/worsica_web_intermediate/worsica_runserver.sh"
     depends_on:
@@ -72,6 +74,7 @@ services:
     hostname: "frontend"
     volumes:
      - ./worsica_frontend:/usr/local/worsica_web
+     - /jenkins/workspace:/jenkins/workspace
     entrypoint: "/bin/bash"
     command: "/usr/local/worsica_web/worsica_runserver.sh"
     depends_on:
