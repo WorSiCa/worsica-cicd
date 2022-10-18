@@ -31,7 +31,7 @@ config:
       - id: worsica-postgis-password
         variable: POSTGRES_PASSWORD
       - id: worsica-database-credentials
-      	username_var: POSTGRES_WORSICA_DB_USER
+        username_var: POSTGRES_WORSICA_DB_USER
         password_var: POSTGRES_WORSICA_DB_PWD
       - id: worsica-rabbitmq-corsica
         username_var: RABBITMQ_USER
