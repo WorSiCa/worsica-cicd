@@ -45,7 +45,8 @@ config:
       - id: worsica-dataverse-credentials
         username_var: WORSICA_DATAVERSE_USER
         password_var: WORSICA_DATAVERSE_PASSWORD
-      - id: worsica-frontend-secrets-sensitive-jenkins
+      - type: file
+        id: worsica-frontend-secrets-sensitive-jenkins
         variable: WORSICA_FRONTEND_SETTINGS_SENSITIVE_FILE
       - id: worsica-frontend-selenium
         username_var: WORSICA_FRONTEND_SELENIUM_USERNAME
@@ -53,7 +54,8 @@ config:
       - id: worsica-frontend-superuser
         username_var: WORSICA_FRONTEND_SUPERUSER_USERNAME
         password_var: WORSICA_FRONTEND_SUPERUSER_PWD        
-      - id: worsica-intermediate-secrets-sensitive-jenkins
+      - type: file
+        id: worsica-intermediate-secrets-sensitive-jenkins
         variable: WORSICA_INTERMEDIATE_SETTINGS_SENSITIVE_FILE
       - id: worsica-intermediate-selenium
         username_var: WORSICA_INTERMEDIATE_SELENIUM_USERNAME
@@ -61,7 +63,8 @@ config:
       - id: worsica-intermediate-superuser
         username_var: WORSICA_INTERMEDIATE_SUPERUSER_USERNAME
         password_var: WORSICA_INTERMEDIATE_SUPERUSER_PWD
-      - id: worsica-processing-gcp-key
+      - type: file
+        id: worsica-processing-gcp-key
         variable: WORSICA_PROCESSING_GCP_KEY_FILE
       
       
