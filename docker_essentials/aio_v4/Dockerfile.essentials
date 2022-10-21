@@ -18,7 +18,7 @@ ENV SCIKIT_IMAGE_VERSION 0.17.2
 
 ENV DJANGO_VERSION 2.2.13 #1.11.29
 ENV SENTINELSAT_VERSION 1.1.0 #0.13
-ENV NUMPY_VERSION 1.15.2
+ENV NUMPY_VERSION 1.19.5 #1.15.2
 
 #Install packages inside venv
 #python needs to be installed since its not installed from the main core to make it smaller
