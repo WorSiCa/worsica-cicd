@@ -17,6 +17,8 @@ else
 	echo "Getting latest version from github..."
 	cd ${CURRENT_PATH}
 	git archive -o $FOLDER_NAME-v${WORSICA_VERSION}.zip development
+	echo "Remove all files from ${RELEASE_PATH} (except .git)"
+	rm -rf ${RELEASE_PATH}/*
 	echo "Extract to ${RELEASE_PATH}..."
 	unzip -o $FOLDER_NAME-v${WORSICA_VERSION}.zip -d ${RELEASE_PATH}
 	rm $FOLDER_NAME-v${WORSICA_VERSION}.zip
