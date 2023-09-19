@@ -24,7 +24,9 @@ ENV NUMPY_VERSION 1.19.5 #1.15.2
 #python needs to be installed since its not installed from the main core to make it smaller
 #epel-release is not needed since fedora already includes them, epel-release is only for rhel and centos
 
-RUN yum update -y \
+RUN echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf \
+    && echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf \
+    && yum update -y \
     && yum install -y python make zlib-devel bzip2-devel openssl-devel readline-devel ncurses-devel sqlite-devel gdbm-devel db4-devel expat-devel libpcap-devel xz-devel pcre-devel libffi-devel libjpeg-devel gcc libXext libSM libXrender findutils less procps htop net-tools iputils unzip zip nmap expect which\
 #Install Python Virtual Environment (venv)
     && cd $HOME \
