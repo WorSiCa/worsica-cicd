@@ -6,7 +6,7 @@ pipeline {
     agent { label 'worsica' }
 
     options {
-        lock('worsica')
+        //lock('worsica')
         throttle(['StandaloneByNode'])
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
     }
