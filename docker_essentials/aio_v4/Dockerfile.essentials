@@ -40,7 +40,7 @@ RUN echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf \
 	protobuf==3.19.4 \n\
 	tox==3.26.0 \n\ 
 	tox-setuptools-version==0.0.0.3" >> requirements-essential-pip.txt \
-    && $HOME/worsica_web-py363_venv/bin/pip3 install --upgrade pip \
+    && $HOME/worsica_web-py363_venv/bin/pip3 install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --upgrade pip \
     && $HOME/worsica_web-py363_venv/bin/pip3 install setuptools==57.0.0 \
     && $HOME/worsica_web-py363_venv/bin/pip3 install --no-cache-dir -r requirements-essential-pip.txt \
 
